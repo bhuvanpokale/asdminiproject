@@ -1,0 +1,3 @@
+Test webhook trigger for Jenkins CI build.
+Pushing a change to this repository triggers the PlacementPro-CI Jenkins pipeline automatically via ngrok endpoint.
+Build trigger verified successfully.

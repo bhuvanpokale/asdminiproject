@@ -1,0 +1,17 @@
+.venv/
+venv/
+env/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+pytest-report.html
+coverage-html/
+.coverage
+*.db
+.git/
+.gitignore
+.github/
+Jenkinsfile
+*.log

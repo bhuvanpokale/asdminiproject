@@ -1,0 +1,246 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - PlacementPro{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <!-- Header Section -->
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 pb-2 border-bottom">
+        <div>
+            <h3 class="fw-bold text-dark mb-1">Your placement dashboard</h3>
+            <p class="text-muted mb-0 small">Keep learning, track your applications, prepare for interviews, and work toward your dream job.</p>
+        </div>
+        <div class="mt-3 mt-md-0 d-flex gap-2">
+            <a href="{{ url_for('applications') }}" class="btn btn-outline-primary btn-sm">
+                <i class="bi bi-plus-lg me-1"></i> Add Application
+            </a>
+            <a href="{{ url_for('interviews') }}" class="btn btn-primary btn-sm">
+                <i class="bi bi-calendar-plus me-1"></i> Schedule Interview
+            </a>
+        </div>
+    </div>
+
+    <!-- 4 Metric Cards (Matching PDF Page 3) -->
+    <div class="row g-3 mb-4">
+        <!-- Applications Card -->
+        <div class="col-sm-6 col-lg-3">
+            <div class="card metric-card shadow-sm border-0 rounded-3 p-3 bg-white h-100">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <span class="text-muted small fw-medium text-uppercase">Applications</span>
+                        <h2 class="fw-bold text-dark mt-1 mb-0">{{ stats.applications }}</h2>
+                    </div>
+                    <div class="metric-icon-box bg-blue-subtle text-primary rounded-3 d-flex align-items-center justify-content-center">
+                        <i class="bi bi-briefcase-fill fs-4"></i>
+                    </div>
+                </div>
+                <div class="mt-2 text-muted" style="font-size: 0.78rem;">
+                    <a href="{{ url_for('applications') }}" class="text-decoration-none text-primary">View all applications &rarr;</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interviews Card -->
+        <div class="col-sm-6 col-lg-3">
+            <div class="card metric-card shadow-sm border-0 rounded-3 p-3 bg-white h-100">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <span class="text-muted small fw-medium text-uppercase">Interviews</span>
+                        <h2 class="fw-bold text-dark mt-1 mb-0">{{ stats.interviews }}</h2>
+                    </div>
+                    <div class="metric-icon-box bg-purple-subtle text-purple rounded-3 d-flex align-items-center justify-content-center">
+                        <i class="bi bi-calendar-event-fill fs-4"></i>
+                    </div>
+                </div>
+                <div class="mt-2 text-muted" style="font-size: 0.78rem;">
+                    <a href="{{ url_for('interviews') }}" class="text-decoration-none text-purple">Track upcoming rounds &rarr;</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Offers Card -->
+        <div class="col-sm-6 col-lg-3">
+            <div class="card metric-card shadow-sm border-0 rounded-3 p-3 bg-white h-100">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <span class="text-muted small fw-medium text-uppercase">Offers</span>
+                        <h2 class="fw-bold text-success mt-1 mb-0">{{ stats.offers }}</h2>
+                    </div>
+                    <div class="metric-icon-box bg-success-subtle text-success rounded-3 d-flex align-items-center justify-content-center">
+                        <i class="bi bi-trophy-fill fs-4"></i>
+                    </div>
+                </div>
+                <div class="mt-2 text-muted" style="font-size: 0.78rem;">
+                    <span class="text-success fw-medium"><i class="bi bi-check-circle-fill me-1"></i> Job offers secured</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Preparation Progress Card -->
+        <div class="col-sm-6 col-lg-3">
+            <div class="card metric-card shadow-sm border-0 rounded-3 p-3 bg-white h-100">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <span class="text-muted small fw-medium text-uppercase">Preparation progress</span>
+                        <h2 class="fw-bold text-teal mt-1 mb-0">{{ stats.prep_percentage }}%</h2>
+                    </div>
+                    <div class="metric-icon-box bg-teal-subtle text-teal rounded-3 d-flex align-items-center justify-content-center">
+                        <i class="bi bi-mortarboard-fill fs-4"></i>
+                    </div>
+                </div>
+                <div class="mt-2">
+                    <div class="progress" style="height: 6px;">
+                        <div class="progress-bar bg-teal" role="progressbar" style="width: {{ stats.prep_percentage }}%;" aria-valuenow="{{ stats.prep_percentage }}" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Section: Upcoming Interviews & Preparation Progress (Side by Side) -->
+    <div class="row g-4 mb-4">
+        <!-- Upcoming Interviews Column -->
+        <div class="col-lg-6">
+            <div class="card shadow-sm border-0 rounded-3 bg-white h-100">
+                <div class="card-header bg-white border-bottom py-3 px-4 d-flex justify-content-between align-items-center">
+                    <h5 class="fw-bold text-dark mb-0">Upcoming interviews</h5>
+                    <a href="{{ url_for('interviews') }}" class="btn btn-sm btn-link text-decoration-none p-0 text-primary">View all</a>
+                </div>
+                <div class="card-body p-4">
+                    {% if upcoming_interviews %}
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle mb-0">
+                                <thead class="table-light small text-muted">
+                                    <tr>
+                                        <th>Company</th>
+                                        <th>Round</th>
+                                        <th>Date & Time</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in upcoming_interviews %}
+                                    <tr>
+                                        <td>
+                                            <div class="fw-semibold text-dark">{{ item.company_name }}</div>
+                                            {% if item.interview_mode %}
+                                            <small class="badge bg-light text-secondary border">{{ item.interview_mode }}</small>
+                                            {% endif %}
+                                        </td>
+                                        <td class="small">{{ item.round_type }}</td>
+                                        <td class="small">
+                                            <div><i class="bi bi-calendar3 me-1 text-muted"></i>{{ item.interview_date }}</div>
+                                            <div><i class="bi bi-clock me-1 text-muted"></i>{{ item.interview_time }}</div>
+                                        </td>
+                                        <td>
+                                            <span class="badge rounded-pill 
+                                                {% if item.status == 'Scheduled' %}bg-primary-subtle text-primary border border-primary-subtle
+                                                {% elif item.status == 'Completed' or item.status == 'Cleared' %}bg-success-subtle text-success border border-success-subtle
+                                                {% else %}bg-warning-subtle text-warning border border-warning-subtle{% endif %}">
+                                                {{ item.status }}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <div class="text-center py-5 text-muted">
+                            <i class="bi bi-calendar-x fs-1 text-secondary-subtle d-block mb-2"></i>
+                            <p class="mb-2">No upcoming interviews scheduled.</p>
+                            <a href="{{ url_for('interviews') }}" class="btn btn-outline-primary btn-sm">Schedule an Interview</a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Preparation Progress Column (Matching PDF Page 3) -->
+        <div class="col-lg-6">
+            <div class="card shadow-sm border-0 rounded-3 bg-white h-100">
+                <div class="card-header bg-white border-bottom py-3 px-4 d-flex justify-content-between align-items-center">
+                    <h5 class="fw-bold text-dark mb-0">Preparation Progress</h5>
+                    <span class="badge bg-teal-subtle text-teal border border-teal-subtle">{{ stats.prep_percentage }}% Completed</span>
+                </div>
+                <div class="card-body p-4">
+                    <!-- Progress Sub-metrics -->
+                    <div class="row g-2 text-center mb-3">
+                        <div class="col-4">
+                            <div class="p-2 border rounded-3 bg-light">
+                                <div class="fs-4 fw-bold text-dark">{{ stats.total_prep }}</div>
+                                <div class="text-muted" style="font-size: 0.72rem;">Total Topics</div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="p-2 border rounded-3 bg-light">
+                                <div class="fs-4 fw-bold text-success">{{ stats.completed_prep }}</div>
+                                <div class="text-muted" style="font-size: 0.72rem;">Completed Topics</div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="p-2 border rounded-3 bg-light">
+                                <div class="fs-4 fw-bold text-warning">{{ stats.in_progress_prep }}</div>
+                                <div class="text-muted" style="font-size: 0.72rem;">In-Progress</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Progress by Category -->
+                    <div class="mt-4">
+                        <h6 class="fw-semibold text-secondary small text-uppercase mb-3" style="letter-spacing: 0.05em;">Progress by Category</h6>
+                        {% if categories_progress %}
+                            <div class="d-flex flex-column gap-3">
+                                {% for cat in categories_progress %}
+                                <div>
+                                    <div class="d-flex justify-content-between align-items-center small mb-1">
+                                        <span class="fw-medium text-dark">{{ cat.category }}</span>
+                                        <span class="text-muted">{{ cat.completed }} / {{ cat.total }} ({{ cat.percent }}%)</span>
+                                    </div>
+                                    <div class="progress" style="height: 7px;">
+                                        <div class="progress-bar {% if cat.percent == 100 %}bg-success{% elif cat.percent >= 50 %}bg-primary{% else %}bg-warning{% endif %}" 
+                                             role="progressbar" 
+                                             style="width: {{ cat.percent }}%;" 
+                                             aria-valuenow="{{ cat.percent }}" 
+                                             aria-valuemin="0" 
+                                             aria-valuemax="100">
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <p class="text-muted small">No topics registered yet.</p>
+                        {% endif %}
+                    </div>
+
+                    <div class="mt-4 pt-2 text-center">
+                        <a href="{{ url_for('preparation') }}" class="btn btn-outline-dark btn-sm px-4">
+                            Manage Preparation Topics &rarr;
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Journey Banner (Matching PDF Page 3) -->
+    <div class="card shadow-sm border-0 rounded-4 bg-gradient-journey p-4 text-dark mb-4">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <div class="d-flex align-items-center gap-2 mb-2">
+                    <span class="badge bg-primary text-white px-2 py-1">Roadmap Active</span>
+                    <h5 class="fw-bold mb-0">Your journey starts here!</h5>
+                </div>
+                <p class="mb-0 text-secondary small">
+                    Keep learning, track your applications, prepare for interviews, and work toward your dream job. Automated testing and continuous integration with Jenkins ensure high reliability throughout your placement cycle.
+                </p>
+            </div>
+            <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                <a href="{{ url_for('applications') }}" class="btn btn-primary btn-sm me-2">Track Applications</a>
+                <a href="{{ url_for('preparation') }}" class="btn btn-outline-secondary btn-sm">Review Syllabus</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
