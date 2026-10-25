@@ -109,7 +109,10 @@ The application was architected using Python Flask and SQLite, following clean M
 
 ## 4. GIT AND GITHUB REPOSITORY
 
-Version control was initialized to track project changes and provide a collaborative remote repository.
+After developing the PlacementPro application, Git was used to maintain the source-code history and GitHub was used as the remote cloud repository.
+
+**GitHub Repository:** [bhuvanpokale/asdminiproject](https://github.com/bhuvanpokale/asdminiproject)  
+**Clone URL:** `https://github.com/bhuvanpokale/asdminiproject.git`
 
 ### Execution Steps:
 1. Initialized Git in the project root: `git init`.
@@ -119,7 +122,8 @@ Version control was initialized to track project changes and provide a collabora
    - Feature: Dashboard and template design
    - Tests: Pytest test suite and HTML reporting
    - DevOps: Dockerfile and Jenkinsfile pipeline
-4. Pushed code to the main branch on GitHub repository.
+4. Connected local project to remote origin: `git remote add origin https://github.com/bhuvanpokale/asdminiproject.git`.
+5. Pushed code to the main branch on GitHub repository.
 
 ---
 
@@ -336,3 +340,4 @@ The workflow implemented in PlacementPro reflects modern software engineering st
 7. **Atlassian Jira Documentation:** https://support.atlassian.com/jira-software-cloud/
 8. **Amazon Web Services (AWS) Documentation:** https://docs.aws.amazon.com/
 9. **Git Documentation:** https://git-scm.com/doc
+10. **GitHub Repository – PlacementPro:** https://github.com/bhuvanpokale/asdminiproject

@@ -25,17 +25,19 @@ def seed():
     cursor.execute("DELETE FROM applications")
     cursor.execute("DELETE FROM users")
 
-    # 1. Create Demo User
+    # 1. Create Demo Users: Primary user Bhuvan Pokale and Shrawni
     demo_password_hash = generate_password_hash("password123")
     cursor.execute(
         """
         INSERT INTO users (id, username, email, password_hash, full_name, college, department, grad_year)
-        VALUES (1, 'shrawni', 'shrawni@example.com', ?, 'Shrawni Patil', 'College of Engineering', 'Computer Engineering', '2026')
+        VALUES 
+        (1, 'bhuvan', 'bhuvanpokale@icloud.com', ?, 'Bhuvan Pokale', 'College of Engineering', 'Computer Engineering', '2026'),
+        (2, 'shrawni', 'shrawni@example.com', ?, 'Shrawni Patil', 'College of Engineering', 'Computer Engineering', '2026')
         """,
-        (demo_password_hash,),
+        (demo_password_hash, demo_password_hash),
     )
 
-    # 2. Add Applications (3 applications: 1 Offered, 1 Interviewing, 1 Applied)
+    # 2. Add Applications for user 1 (3 applications: 1 Offered, 1 Interviewing, 1 Applied)
     cursor.execute(
         """
         INSERT INTO applications (id, user_id, company_name, role, job_type, salary, status, application_date, deadline, job_url, notes)
@@ -46,7 +48,7 @@ def seed():
         """
     )
 
-    # 3. Add Interviews (2 upcoming / active interviews)
+    # 3. Add Interviews for user 1 (2 upcoming / active interviews)
     cursor.execute(
         """
         INSERT INTO interviews (id, user_id, application_id, company_name, round_type, interview_date, interview_time, interview_mode, meeting_link, status, notes)
@@ -56,7 +58,7 @@ def seed():
         """
     )
 
-    # 4. Add Preparation Topics (100% completed or high progress)
+    # 4. Add Preparation Topics for user 1 (100% completed or high progress)
     cursor.execute(
         """
         INSERT INTO preparation_topics (id, user_id, category, title, difficulty, status, resource_url, notes)
@@ -69,9 +71,39 @@ def seed():
         """
     )
 
+    # Duplicate seed for user 2 (shrawni)
+    cursor.execute(
+        """
+        INSERT INTO applications (id, user_id, company_name, role, job_type, salary, status, application_date, deadline, job_url, notes)
+        VALUES 
+        (4, 2, 'Google', 'Software Development Engineer - 1', 'Full-time', '₹28 LPA', 'Interviewing', '2026-10-10', '2026-10-30', 'https://careers.google.com', 'Referral received from alumni. Technical rounds ongoing.'),
+        (5, 2, 'Microsoft', 'Software Engineer (SWE)', 'Full-time', '₹24 LPA', 'Offered', '2026-09-15', '2026-10-01', 'https://careers.microsoft.com', 'Offer received! 4 rounds of interviews cleared successfully.'),
+        (6, 2, 'Amazon', 'Cloud Solutions Architect Associate', 'Full-time', '₹22 LPA', 'Applied', '2026-10-18', '2026-11-05', 'https://amazon.jobs', 'Online assessment submitted. Waiting for results.')
+        """
+    )
+    cursor.execute(
+        """
+        INSERT INTO interviews (id, user_id, application_id, company_name, round_type, interview_date, interview_time, interview_mode, meeting_link, status, notes)
+        VALUES
+        (3, 2, 4, 'Google', 'Technical Round 2 - System Design & Coding', '2026-10-28', '14:30', 'Virtual', 'https://meet.google.com/xyz-placement-pro', 'Scheduled', 'Review Trie and algorithms.'),
+        (4, 2, 6, 'Amazon', 'Technical Round 1 - DSA & Problem Solving', '2026-10-31', '11:00', 'Virtual', 'https://chime.aws/placement-interview', 'Scheduled', 'Focus on Leadership Principles.')
+        """
+    )
+    cursor.execute(
+        """
+        INSERT INTO preparation_topics (id, user_id, category, title, difficulty, status, resource_url, notes)
+        VALUES
+        (6, 2, 'Data Structures & Algorithms', 'Dynamic Programming & Memoization', 'Hard', 'Completed', 'https://leetcode.com', 'Solved 25 LeetCode DP questions.'),
+        (7, 2, 'Core Computer Science', 'OS: Concurrency, Deadlocks & Virtual Memory', 'Medium', 'Completed', 'https://geeksforgeeks.org', 'Reviewed Peterson solution.'),
+        (8, 2, 'Core Computer Science', 'DBMS: SQL Joins, Indexing & B-Trees', 'Medium', 'Completed', 'https://geeksforgeeks.org', 'Prepared ACID properties.'),
+        (9, 2, 'System Design', 'Microservices Architecture & API Gateways', 'Medium', 'Completed', 'https://github.com', 'Studied load balancers.'),
+        (10, 2, 'Behavioral & HR', 'Amazon Leadership Principles & STAR Stories', 'Easy', 'Completed', 'https://themuse.com', 'Framed 5 behavioral scenarios.')
+        """
+    )
+
     conn.commit()
     conn.close()
-    print("Database successfully seeded with demo user and placement data!")
+    print("Database successfully seeded with Bhuvan and demo placement data!")
 
 
 if __name__ == "__main__":

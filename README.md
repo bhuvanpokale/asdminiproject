@@ -2,6 +2,13 @@
 ### Student Placement Preparation and Job Tracking System
 **DevOps-Integrated Full Stack Web Application Built with Flask, SQLite, Pytest, Docker, Jenkins & AWS**
 
+[![GitHub Repository](https://img.shields.io/badge/GitHub-bhuvanpokale%2Fasdminiproject-blue?logo=github)](https://github.com/bhuvanpokale/asdminiproject)
+[![Python Tests](https://img.shields.io/badge/Pytest-13%20Passed%20(100%25)-brightgreen?logo=pytest)](https://github.com/bhuvanpokale/asdminiproject)
+[![Docker](https://img.shields.io/badge/Docker-Containerized-2496ED?logo=docker)](https://github.com/bhuvanpokale/asdminiproject)
+[![CI Pipeline](https://img.shields.io/badge/Jenkins-CI%2FCD-D24939?logo=jenkins)](https://github.com/bhuvanpokale/asdminiproject)
+
+**Official Repository:** [https://github.com/bhuvanpokale/asdminiproject](https://github.com/bhuvanpokale/asdminiproject)
+
 ---
 
 ## 🌟 Executive Summary
@@ -107,7 +114,7 @@ Run the included seed script to populate realistic placement data matching the d
 python seed_data.py
 ```
 > **Default Demo Account:**
-> - Username: `shrawni`
+> - Username: `bhuvan`
 > - Password: `password123`
 
 ### 4. Run the Web Server
